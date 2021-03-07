@@ -56,20 +56,27 @@ class _PagesTestWidgetState extends State<PagesTestWidget> {
       widget.currentTab = tabItem; // == 3 ? 1 : tabItem;
       switch (tabItem) {
         case 0:
-          widget.currentPage = ProfileWidget(parentScaffoldKey: widget.scaffoldKey);
+          widget.currentPage =
+              ProfileWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 1:
-          widget.currentPage = RestaurantsWidget(parentScaffoldKey: widget.scaffoldKey);
+          widget.currentPage =
+              OrdersWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 2:
-          widget.currentPage = OrdersWidget(parentScaffoldKey: widget.scaffoldKey);
+          widget.currentPage =
+              RestaurantsWidget(parentScaffoldKey: widget.scaffoldKey);
+
           break;
-        case 3:
-          widget.currentPage = MessagesWidget(parentScaffoldKey: widget.scaffoldKey); //FavoritesWidget(parentScaffoldKey: widget.scaffoldKey);
-          break;
-        case 4:
-          widget.currentPage = SettingsWidget(parentScaffoldKey: widget.scaffoldKey);
-          break;
+        // case 3:
+        //   widget.currentPage = MessagesWidget(
+        //       parentScaffoldKey: widget
+        //           .scaffoldKey); //FavoritesWidget(parentScaffoldKey: widget.scaffoldKey);
+        //   break;
+        // case 4:
+        //   widget.currentPage =
+        //       SettingsWidget(parentScaffoldKey: widget.scaffoldKey);
+        //   break;
       }
     });
   }
@@ -103,10 +110,7 @@ class _PagesTestWidgetState extends State<PagesTestWidget> {
               icon: Icon(Icons.person),
               label: '',
             ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.store_mall_directory),
-              label: '',
-            ),
+
             BottomNavigationBarItem(
                 label: '',
                 icon: Container(
@@ -119,20 +123,31 @@ class _PagesTestWidgetState extends State<PagesTestWidget> {
                       Radius.circular(50),
                     ),
                     boxShadow: [
-                      BoxShadow(color: Theme.of(context).accentColor.withOpacity(0.4), blurRadius: 40, offset: Offset(0, 15)),
-                      BoxShadow(color: Theme.of(context).accentColor.withOpacity(0.4), blurRadius: 13, offset: Offset(0, 3))
+                      BoxShadow(
+                          color: Theme.of(context).accentColor.withOpacity(0.4),
+                          blurRadius: 40,
+                          offset: Offset(0, 15)),
+                      BoxShadow(
+                          color: Theme.of(context).accentColor.withOpacity(0.4),
+                          blurRadius: 13,
+                          offset: Offset(0, 3))
                     ],
                   ),
-                  child: new Icon(Icons.home, color: Theme.of(context).primaryColor),
+                  child: new Icon(Icons.home,
+                      color: Theme.of(context).primaryColor),
                 )),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.chat),
+              icon: new Icon(Icons.store_mall_directory),
               label: '',
             ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.settings),
-              label: '',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: new Icon(Icons.chat),
+            //   label: '',
+            // ),
+            // BottomNavigationBarItem(
+            //   icon: new Icon(Icons.settings),
+            //   label: '',
+            // ),
           ],
         ),
       ),
@@ -141,7 +156,8 @@ class _PagesTestWidgetState extends State<PagesTestWidget> {
 
   Future<bool> onWillPop() {
     DateTime now = DateTime.now();
-    if (widget.currentBackPressTime == null || now.difference(widget.currentBackPressTime) > Duration(seconds: 2)) {
+    if (widget.currentBackPressTime == null ||
+        now.difference(widget.currentBackPressTime) > Duration(seconds: 2)) {
       widget.currentBackPressTime = now;
       Fluttertoast.showToast(msg: S.of(context).tapBackAgainToLeave);
       return Future.value(false);

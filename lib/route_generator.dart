@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_owner/src/pages/map.dart';
 
 import 'src/models/route_argument.dart';
 import 'src/pages/chat.dart';
@@ -24,6 +25,9 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case '/SignUp':
         return MaterialPageRoute(builder: (_) => SignUpWidget());
+      case '/Mapnew':
+        return MaterialPageRoute(
+            builder: (_) => MapWidget(routeArgument: args as RouteArgument));
       case '/MobileVerification':
         return MaterialPageRoute(builder: (_) => SignUpWidget());
       case '/MobileVerification2':
@@ -33,15 +37,21 @@ class RouteGenerator {
       case '/ForgetPassword':
         return MaterialPageRoute(builder: (_) => ForgetPasswordWidget());
       case '/Pages':
-        return MaterialPageRoute(builder: (_) => PagesTestWidget(currentTab: args));
+        return MaterialPageRoute(
+            builder: (_) => PagesTestWidget(currentTab: args));
       case '/Chat':
-        return MaterialPageRoute(builder: (_) => ChatWidget(routeArgument: args as RouteArgument));
+        return MaterialPageRoute(
+            builder: (_) => ChatWidget(routeArgument: args as RouteArgument));
       case '/Details':
-        return MaterialPageRoute(builder: (_) => DetailsWidget(routeArgument: args));
+        return MaterialPageRoute(
+            builder: (_) => DetailsWidget(routeArgument: args));
       case '/OrderDetails':
-        return MaterialPageRoute(builder: (_) => OrderWidget(routeArgument: args as RouteArgument));
+        return MaterialPageRoute(
+            builder: (_) => OrderWidget(routeArgument: args as RouteArgument));
       case '/OrderEdit':
-        return MaterialPageRoute(builder: (_) => OrderEditWidget(routeArgument: args as RouteArgument));
+        return MaterialPageRoute(
+            builder: (_) =>
+                OrderEditWidget(routeArgument: args as RouteArgument));
       case '/Notifications':
         return MaterialPageRoute(builder: (_) => NotificationsWidget());
       case '/Languages':
@@ -52,7 +62,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SettingsWidget());
       default:
         // If there is no such named route in the switch statement, e.g. /third
-        return MaterialPageRoute(builder: (_) => Scaffold(body: SizedBox(height: 0)));
+        return MaterialPageRoute(
+            builder: (_) => Scaffold(body: SizedBox(height: 0)));
     }
   }
 }

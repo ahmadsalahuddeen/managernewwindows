@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:food_delivery_owner/src/models/address.dart';
+import 'package:food_delivery_owner/src/models/restaurant.dart';
+import 'package:food_delivery_owner/src/models/setting.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
@@ -14,13 +17,17 @@ class MapWidget extends StatefulWidget {
   final RouteArgument routeArgument;
   final GlobalKey<ScaffoldState> parentScaffoldKey;
 
-  MapWidget({Key key, this.routeArgument, this.parentScaffoldKey}) : super(key: key);
+  MapWidget({Key key, this.routeArgument, this.parentScaffoldKey})
+      : super(key: key);
 
   @override
   _MapWidgetState createState() => _MapWidgetState();
 }
 
 class _MapWidgetState extends StateMVC<MapWidget> {
+  Setting setting;
+  Address addresss;
+  Restaurant restaurant;
   MapController _con;
 
   _MapWidgetState() : super(MapController()) {
@@ -50,15 +57,20 @@ class _MapWidgetState extends StateMVC<MapWidget> {
         leading: _con.currentOrder?.deliveryAddress?.latitude == null
             ? new IconButton(
                 icon: new Icon(Icons.sort, color: Theme.of(context).hintColor),
-                onPressed: () => widget.parentScaffoldKey.currentState.openDrawer(),
+                onPressed: () =>
+                    widget.parentScaffoldKey.currentState.openDrawer(),
               )
             : IconButton(
-                icon: new Icon(Icons.arrow_back, color: Theme.of(context).hintColor),
+                icon: new Icon(Icons.arrow_back,
+                    color: Theme.of(context).hintColor),
                 onPressed: () => Navigator.of(context).pop(),
               ),
         title: Text(
           S.of(context).delivery_addresses,
-          style: Theme.of(context).textTheme.headline6.merge(TextStyle(letterSpacing: 1.3)),
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .merge(TextStyle(letterSpacing: 1.3)),
         ),
         actions: <Widget>[
           IconButton(
@@ -93,15 +105,19 @@ class _MapWidgetState extends StateMVC<MapWidget> {
                     _con.getOrdersOfArea();
                   },
                   polylines: _con.polylines,
+                  buildingsEnabled: true,
                 ),
           Container(
-            height: 95,
+            height: 110,
             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
             margin: EdgeInsets.only(bottom: 20),
             decoration: BoxDecoration(
               color: Theme.of(context).primaryColor.withOpacity(0.9),
               boxShadow: [
-                BoxShadow(color: Theme.of(context).focusColor.withOpacity(0.1), blurRadius: 5, offset: Offset(0, 2)),
+                BoxShadow(
+                    color: Theme.of(context).focusColor.withOpacity(0.1),
+                    blurRadius: 5,
+                    offset: Offset(0, 2)),
               ],
             ),
             child: Row(
@@ -112,7 +128,9 @@ class _MapWidgetState extends StateMVC<MapWidget> {
                     ? Container(
                         width: 60,
                         height: 60,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green.withOpacity(0.2)),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.green.withOpacity(0.2)),
                         child: Icon(
                           Icons.check,
                           color: Colors.green,
@@ -122,7 +140,10 @@ class _MapWidgetState extends StateMVC<MapWidget> {
                     : Container(
                         width: 60,
                         height: 60,
-                        decoration: BoxDecoration(shape: BoxShape.circle, color: Theme.of(context).hintColor.withOpacity(0.1)),
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color:
+                                Theme.of(context).hintColor.withOpacity(0.1)),
                         child: Icon(
                           Icons.update,
                           color: Theme.of(context).hintColor.withOpacity(0.8),
@@ -140,21 +161,29 @@ class _MapWidgetState extends StateMVC<MapWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
                             Text(
-                              S.of(context).order_id + "#${_con.currentOrder.id}",
+                              "Order id  " + "#${_con.currentOrder.id}",
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             Text(
-                              _con.currentOrder.payment?.method ?? S.of(context).cash_on_delivery,
+                              _con.currentOrder.payment?.method ??
+                                  S.of(context).cash_on_delivery,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 2,
                               style: Theme.of(context).textTheme.caption,
                             ),
                             Text(
-                              DateFormat('yyyy-MM-dd HH:mm', 'en').format(_con.currentOrder.dateTime),
+                              DateFormat('yyyy-MM-dd HH:mm', 'en')
+                                  .format(_con.currentOrder.dateTime),
                               style: Theme.of(context).textTheme.caption,
                             ),
+                            Text(
+                              Helper.getDistance(
+                                  restaurant.distance,
+                                  Helper.of(context)
+                                      .trans(setting.distanceUnit)),
+                            )
                           ],
                         ),
                       ),
@@ -163,9 +192,16 @@ class _MapWidgetState extends StateMVC<MapWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: <Widget>[
-                          Helper.getPrice(Helper.getTotalOrdersPrice(_con.currentOrder), context, style: Theme.of(context).textTheme.headline4),
+                          Helper.getPrice(
+                              Helper.getTotalOrdersPrice(_con.currentOrder),
+                              context,
+                              style: Theme.of(context).textTheme.headline4),
                           Text(
-                            S.of(context).items + ':' + _con.currentOrder.foodOrders?.length?.toString() ?? 0,
+                            S.of(context).items +
+                                    ':' +
+                                    _con.currentOrder.foodOrders?.length
+                                        ?.toString() ??
+                                0,
                             style: Theme.of(context).textTheme.caption,
                           ),
                         ],

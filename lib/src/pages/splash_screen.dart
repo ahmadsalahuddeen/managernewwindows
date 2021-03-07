@@ -35,7 +35,7 @@ class SplashScreenState extends StateMVC<SplashScreen> {
           if (currentUser.value.apiToken == null) {
             Navigator.of(context).pushReplacementNamed('/Login');
           } else {
-            Navigator.of(context).pushReplacementNamed('/Pages', arguments: 2);
+            Navigator.of(context).pushReplacementNamed('/Pages', arguments: 1);
           }
         } catch (e) {}
       }
@@ -65,7 +65,8 @@ class SplashScreenState extends StateMVC<SplashScreen> {
                 ),
                 SizedBox(height: 50),
                 CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).hintColor),
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                      Theme.of(context).hintColor),
                 ),
               ],
             ),

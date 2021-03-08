@@ -25,9 +25,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case '/SignUp':
         return MaterialPageRoute(builder: (_) => SignUpWidget());
-      case '/Mapnew':
+      case '/Map':
         return MaterialPageRoute(
             builder: (_) => MapWidget(routeArgument: args as RouteArgument));
+
       case '/MobileVerification':
         return MaterialPageRoute(builder: (_) => SignUpWidget());
       case '/MobileVerification2':

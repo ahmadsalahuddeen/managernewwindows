@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:food_delivery_owner/src/models/address.dart';
 import 'package:food_delivery_owner/src/models/restaurant.dart';
 import 'package:food_delivery_owner/src/models/setting.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
-
+import 'package:intl/intl.dart';
 import '../../generated/l10n.dart';
 import '../controllers/map_controller.dart';
 import '../elements/CircularLoadingWidget.dart';
@@ -105,7 +106,7 @@ class _MapWidgetState extends StateMVC<MapWidget> {
                     _con.getOrdersOfArea();
                   },
                   polylines: _con.polylines,
-                  buildingsEnabled: true,
+                  //buildingsEnabled: true,
                 ),
           Container(
             height: 110,
@@ -174,16 +175,16 @@ class _MapWidgetState extends StateMVC<MapWidget> {
                               style: Theme.of(context).textTheme.caption,
                             ),
                             Text(
-                              DateFormat('yyyy-MM-dd HH:mm', 'en')
+                              DateFormat('yyyy-MM-dd h:mm a  ', 'en')
                                   .format(_con.currentOrder.dateTime),
                               style: Theme.of(context).textTheme.caption,
                             ),
-                            Text(
-                              Helper.getDistance(
-                                  restaurant.distance,
-                                  Helper.of(context)
-                                      .trans(setting.distanceUnit)),
-                            )
+                            // Text(
+                            //   Helper.getDistance(
+                            //       restaurant.distance,
+                            //       Helper.of(context)
+                            //           .trans(setting.distanceUnit)),
+                            // )
                           ],
                         ),
                       ),

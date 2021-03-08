@@ -62,7 +62,9 @@ class MapController extends ControllerMVC {
         }
       });
       if (!currentAddress.isUnknown()) {
-        Helper.getMyPositionMarker(currentAddress.latitude, currentAddress.longitude).then((marker) {
+        Helper.getMyPositionMarker(
+                currentAddress.latitude, currentAddress.longitude)
+            .then((marker) {
           setState(() {
             allMarkers.add(marker);
           });
@@ -80,12 +82,15 @@ class MapController extends ControllerMVC {
       currentAddress = sett.myAddress.value;
       setState(() {
         cameraPosition = CameraPosition(
-          target: LatLng(currentOrder.deliveryAddress.latitude, currentOrder.deliveryAddress.longitude),
+          target: LatLng(currentOrder.deliveryAddress.latitude,
+              currentOrder.deliveryAddress.longitude),
           zoom: 14.4746,
         );
       });
       if (!currentAddress.isUnknown()) {
-        Helper.getMyPositionMarker(currentAddress.latitude, currentAddress.longitude).then((marker) {
+        Helper.getMyPositionMarker(
+                currentAddress.latitude, currentAddress.longitude)
+            .then((marker) {
           setState(() {
             allMarkers.add(marker);
           });
@@ -116,7 +121,10 @@ class MapController extends ControllerMVC {
   void getOrdersOfArea() async {
     setState(() {
       orders = <Order>[];
-      Address areaAddress = Address.fromJSON({"latitude": cameraPosition.target.latitude, "longitude": cameraPosition.target.longitude});
+      Address areaAddress = Address.fromJSON({
+        "latitude": cameraPosition.target.latitude,
+        "longitude": cameraPosition.target.longitude
+      });
       if (cameraPosition != null) {
         listenForNearOrders(currentAddress, areaAddress);
       } else {
@@ -140,10 +148,15 @@ class MapController extends ControllerMVC {
         .then((dynamic res) {
       if (res != null) {
         List<LatLng> _latLng = res as List<LatLng>;
-        _latLng?.insert(0, new LatLng(currentAddress.latitude, currentAddress.longitude));
+        _latLng?.insert(
+            0, new LatLng(currentAddress.latitude, currentAddress.longitude));
         setState(() {
           polylines.add(new Polyline(
-              visible: true, polylineId: new PolylineId(currentAddress.hashCode.toString()), points: _latLng, color: config.Colors().mainColor(0.8), width: 6));
+              visible: true,
+              polylineId: new PolylineId(currentAddress.hashCode.toString()),
+              points: _latLng,
+              color: config.Colors().accentColor(9),
+              width: 6));
         });
       }
     });
@@ -154,7 +167,9 @@ class MapController extends ControllerMVC {
     currentOrder.foodOrders?.forEach((food) {
       subTotal += food.quantity * food.price;
     });
-    deliveryFee = currentOrder.foodOrders?.elementAt(0)?.food?.restaurant?.deliveryFee ?? 0;
+    deliveryFee =
+        currentOrder.foodOrders?.elementAt(0)?.food?.restaurant?.deliveryFee ??
+            0;
     taxAmount = (subTotal + deliveryFee) * currentOrder.tax / 100;
     total = subTotal + taxAmount + deliveryFee;
 

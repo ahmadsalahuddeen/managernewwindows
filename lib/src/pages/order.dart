@@ -4,7 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:url_launcher/url_launcher.dart';
-
+import 'package:intl/intl.dart';
 import '../../generated/l10n.dart';
 import '../controllers/order_controller.dart';
 import '../elements/CircularLoadingWidget.dart';
@@ -330,10 +330,11 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                                           Theme.of(context).textTheme.caption,
                                     ),
                                     Text(
-                                      DateFormat('yyyy-MM-dd HH:mm', 'en')
+                                      DateFormat(
+                                              'yyyy-MM-dd    h :mm a  ', 'en')
                                           .format(_con.order.dateTime),
                                       style:
-                                          Theme.of(context).textTheme.caption,
+                                          Theme.of(context).textTheme.bodyText1,
                                     ),
                                   ],
                                 ),
@@ -548,7 +549,7 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                                       .focusColor
                                       .withOpacity(0.4),
                                   onPressed: () {
-                                    Navigator.of(context).pushNamed('/Mapnew',
+                                    Navigator.of(context).pushNamed('/Map',
                                         arguments: new RouteArgument(
                                             id: '3', param: _con.order));
                                   },

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
-
+import 'package:intl/intl.dart';
 import '../../generated/l10n.dart';
 import '../helpers/helper.dart';
 import '../models/order.dart';
@@ -58,7 +58,7 @@ class TrackingController extends ControllerMVC {
         ),
         subtitle: order.orderStatus.id == _orderStatus.id
             ? Text(
-                '${DateFormat('HH:mm | yyyy-MM-dd').format(order.dateTime)}',
+                '${DateFormat('h:mm a   | yyyy-MM-dd').format(order.dateTime)}',
                 style: Theme.of(context).textTheme.caption,
                 overflow: TextOverflow.ellipsis,
               )
@@ -68,7 +68,8 @@ class TrackingController extends ControllerMVC {
             child: Text(
               '${Helper.skipHtml(order.hint)}',
             )),
-        isActive: (int.tryParse(order.orderStatus.id)) >= (int.tryParse(_orderStatus.id)),
+        isActive: (int.tryParse(order.orderStatus.id)) >=
+            (int.tryParse(_orderStatus.id)),
       ));
     });
     return _orderStatusSteps;

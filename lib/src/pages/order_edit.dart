@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
-
+import 'package:intl/intl.dart';
 import '../../generated/l10n.dart';
 import '../controllers/order_controller.dart';
 import '../elements/CircularLoadingWidget.dart';
@@ -52,7 +52,8 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                 builder: (context) {
                   return AlertDialog(
                     title: Text(S.of(context).confirmation),
-                    content: Text("Would you please confirm if you want to save changes"),
+                    content: Text(
+                        "Would you please confirm if you want to save changes"),
                     actions: <Widget>[
                       // usually buttons at the bottom of the dialog
                       FlatButton(
@@ -79,7 +80,10 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
           child: Text(
             S.of(context).saveChanges,
             textAlign: TextAlign.start,
-            style: Theme.of(context).textTheme.headline6.merge(TextStyle(color: Theme.of(context).primaryColor)),
+            style: Theme.of(context)
+                .textTheme
+                .headline6
+                .merge(TextStyle(color: Theme.of(context).primaryColor)),
           ),
         ),
       ),
@@ -91,13 +95,18 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
         centerTitle: true,
         title: Text(
           S.of(context).editOrder,
-          style: Theme.of(context).textTheme.headline6.merge(TextStyle(letterSpacing: 1.3)),
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .merge(TextStyle(letterSpacing: 1.3)),
         ),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: <Widget>[
-          new ShoppingCartButtonWidget(iconColor: Theme.of(context).hintColor, labelColor: Theme.of(context).accentColor),
+          new ShoppingCartButtonWidget(
+              iconColor: Theme.of(context).hintColor,
+              labelColor: Theme.of(context).accentColor),
         ],
       ),
       body: _con.order == null
@@ -112,7 +121,10 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                   decoration: BoxDecoration(
                     color: Theme.of(context).primaryColor.withOpacity(0.9),
                     boxShadow: [
-                      BoxShadow(color: Theme.of(context).focusColor.withOpacity(0.1), blurRadius: 5, offset: Offset(0, 2)),
+                      BoxShadow(
+                          color: Theme.of(context).focusColor.withOpacity(0.1),
+                          blurRadius: 5,
+                          offset: Offset(0, 2)),
                     ],
                   ),
                   child: Row(
@@ -128,10 +140,12 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    S.of(context).order_id + ": #${_con.order.id}",
+                                    S.of(context).order_id +
+                                        ": #${_con.order.id}",
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
-                                    style: Theme.of(context).textTheme.headline4,
+                                    style:
+                                        Theme.of(context).textTheme.headline4,
                                   ),
                                   Text(
                                     _con.order.orderStatus.status,
@@ -140,7 +154,8 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                                     style: Theme.of(context).textTheme.caption,
                                   ),
                                   Text(
-                                    DateFormat('yyyy-MM-dd HH:mm', 'en').format(_con.order.dateTime),
+                                    DateFormat('yyyy-MM-dd h:mm a  ', 'en')
+                                        .format(_con.order.dateTime),
                                     style: Theme.of(context).textTheme.caption,
                                   ),
                                 ],
@@ -151,15 +166,24 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: <Widget>[
-                                Helper.getPrice(Helper.getTotalOrdersPrice(_con.order), context, style: Theme.of(context).textTheme.headline4),
+                                Helper.getPrice(
+                                    Helper.getTotalOrdersPrice(_con.order),
+                                    context,
+                                    style:
+                                        Theme.of(context).textTheme.headline4),
                                 Text(
-                                  _con.order.payment?.method ?? S.of(context).cash_on_delivery,
+                                  _con.order.payment?.method ??
+                                      S.of(context).cash_on_delivery,
                                   overflow: TextOverflow.ellipsis,
                                   maxLines: 2,
                                   style: Theme.of(context).textTheme.caption,
                                 ),
                                 Text(
-                                  S.of(context).items + ':' + _con.order.foodOrders?.length?.toString() ?? 0,
+                                  S.of(context).items +
+                                          ':' +
+                                          _con.order.foodOrders?.length
+                                              ?.toString() ??
+                                      0,
                                   style: Theme.of(context).textTheme.caption,
                                 ),
                               ],
@@ -223,7 +247,8 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                     })),
                 ExpansionTile(
                     tilePadding: EdgeInsets.symmetric(horizontal: 20),
-                    childrenPadding: EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                    childrenPadding:
+                        EdgeInsets.symmetric(vertical: 5, horizontal: 20),
                     title: Text(S.of(context).generalInformation),
                     initiallyExpanded: true,
                     children: [
@@ -232,7 +257,8 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                         onChanged: (String value) {
                           _con.order.hint = value;
                         },
-                        controller: TextEditingController()..text = _con.order.hint,
+                        controller: TextEditingController()
+                          ..text = _con.order.hint,
                         cursorColor: Theme.of(context).accentColor,
                         maxLines: 3,
                         decoration: InputDecoration(
@@ -241,19 +267,35 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           contentPadding: EdgeInsets.all(18),
                           hintStyle: Theme.of(context).textTheme.caption,
-                          hintText: S.of(context).insertAnAdditionalInformationForThisOrder,
-                          border: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.5))),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
+                          hintText: S
+                              .of(context)
+                              .insertAnAdditionalInformationForThisOrder,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.2))),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.5))),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.2))),
                         ),
                       ),
                       SizedBox(height: 20),
                       TextField(
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
                         onChanged: (String value) {
                           _con.order.tax = double.tryParse(value);
                         },
-                        controller: TextEditingController()..text = _con.order.tax.toString(),
+                        controller: TextEditingController()
+                          ..text = _con.order.tax.toString(),
                         cursorColor: Theme.of(context).accentColor,
                         decoration: InputDecoration(
                           labelText: S.of(context).tax,
@@ -261,19 +303,35 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           contentPadding: EdgeInsets.all(18),
                           hintStyle: Theme.of(context).textTheme.caption,
-                          hintText: S.of(context).insertAnAdditionalInformationForThisOrder,
-                          border: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.5))),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
+                          hintText: S
+                              .of(context)
+                              .insertAnAdditionalInformationForThisOrder,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.2))),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.5))),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.2))),
                         ),
                       ),
                       SizedBox(height: 20),
                       TextField(
-                        keyboardType: TextInputType.numberWithOptions(decimal: true),
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
                         onChanged: (String value) {
                           _con.order.deliveryFee = double.tryParse(value);
                         },
-                        controller: TextEditingController()..text = _con.order.deliveryFee.toString(),
+                        controller: TextEditingController()
+                          ..text = _con.order.deliveryFee.toString(),
                         cursorColor: Theme.of(context).accentColor,
                         decoration: InputDecoration(
                           labelText: S.of(context).delivery_fee,
@@ -281,10 +339,24 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                           floatingLabelBehavior: FloatingLabelBehavior.always,
                           contentPadding: EdgeInsets.all(18),
                           hintStyle: Theme.of(context).textTheme.caption,
-                          hintText: S.of(context).insertAnAdditionalInformationForThisOrder,
-                          border: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.5))),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Theme.of(context).focusColor.withOpacity(0.2))),
+                          hintText: S
+                              .of(context)
+                              .insertAnAdditionalInformationForThisOrder,
+                          border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.2))),
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.5))),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Theme.of(context)
+                                      .focusColor
+                                      .withOpacity(0.2))),
                         ),
                       ),
                       SizedBox(height: 20),

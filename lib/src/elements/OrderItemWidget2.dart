@@ -10,21 +10,21 @@ import '../models/order.dart';
 import '../models/route_argument.dart';
 import 'FoodOrderItemWidget.dart';
 
-class OrderItemWidget extends StatefulWidget {
+class OrderItem2Widget extends StatefulWidget {
   final bool expanded;
   final Order order;
   final ValueChanged<void> onCanceled;
 
-  OrderItemWidget({Key key, this.expanded, this.order, this.onCanceled})
+  OrderItem2Widget({Key key, this.expanded, this.order, this.onCanceled})
       : super(key: key);
 
   @override
-  _OrderItemWidgetState createState() {
-    return _OrderItemWidgetState();
+  _OrderItem2WidgetState createState() {
+    return _OrderItem2WidgetState();
   }
 }
 
-class _OrderItemWidgetState extends StateMVC<OrderItemWidget> {
+class _OrderItem2WidgetState extends StateMVC<OrderItem2Widget> {
   // OrderController _con;
 
   // _OrderItemWidgetState() : super(OrderController()) {
@@ -160,91 +160,86 @@ class _OrderItemWidgetState extends StateMVC<OrderItemWidget> {
                   alignment: WrapAlignment.end,
                   children: <Widget>[
                     if (widget.order.canCancelOrder())
-                      FlatButton(
-                        color: Colors.red, //Theme.of(context).accentColor,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              // return object of type Dialog
-                              return AlertDialog(
-                                title: Wrap(
-                                  spacing: 10,
-                                  children: <Widget>[
-                                    Icon(Icons.report, color: Colors.orange),
-                                    Text(
-                                      S.of(context).confirmation,
-                                      style: TextStyle(color: Colors.orange),
-                                    ),
-                                  ],
-                                ),
-                                content: Text('Cancel the order ?'),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 30, vertical: 25),
-                                actions: <Widget>[
-                                  FlatButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        side: BorderSide(
-                                            color: Theme.of(context)
-                                                .accentColor
-                                                .withOpacity(0.5))),
-                                    child: new Text(
-                                      S.of(context).yes,
-                                      style: TextStyle(
-                                          color: Theme.of(context).hintColor),
-                                    ),
-                                    onPressed: () {
-                                      widget.onCanceled(widget.order);
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  FlatButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(5)),
-                                        side: BorderSide(
-                                            color: Theme.of(context)
-                                                .accentColor
-                                                .withOpacity(0.5))),
-                                    child: new Text(
-                                      'No',
-                                      style: TextStyle(
-                                          color: Theme.of(context).hintColor),
-                                    ),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  )
-                                ],
-                              );
-                            },
-                          );
-                        },
-                        textColor: Theme.of(context).primaryColor,
-                        child: Wrap(
-                          children: <Widget>[Text(S.of(context).cancel + " ")],
-                        ),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                      // FlatButton(
+                      //   color: Colors.red, //Theme.of(context).accentColor,
+                      //   shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.all(Radius.circular(5))),
+                      //   onPressed: () {
+                      //     showDialog(
+                      //       context: context,
+                      //       builder: (BuildContext context) {
+                      //         // return object of type Dialog
+                      //         return AlertDialog(
+                      //           title: Wrap(
+                      //             spacing: 10,
+                      //             children: <Widget>[
+                      //               Icon(Icons.report, color: Colors.orange),
+                      //               Text(
+                      //                 S.of(context).confirmation,
+                      //                 style: TextStyle(color: Colors.orange),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //           content: Text('Cancel the order ?'),
+                      //           contentPadding: EdgeInsets.symmetric(
+                      //               horizontal: 30, vertical: 25),
+                      //           actions: <Widget>[
+                      //             FlatButton(
+                      //               shape: RoundedRectangleBorder(
+                      //                   borderRadius: BorderRadius.all(
+                      //                       Radius.circular(5)),
+                      //                   side: BorderSide(
+                      //                       color: Theme.of(context)
+                      //                           .accentColor
+                      //                           .withOpacity(0.5))),
+                      //               child: new Text(
+                      //                 S.of(context).yes,
+                      //                 style: TextStyle(
+                      //                     color: Theme.of(context).hintColor),
+                      //               ),
+                      //               onPressed: () {
+                      //                 widget.onCanceled(widget.order);
+                      //                 Navigator.of(context).pop();
+                      //               },
+                      //             ),
+                      //             SizedBox(
+                      //               width: 10,
+                      //             ),
+                      //             FlatButton(
+                      //               shape: RoundedRectangleBorder(
+                      //                   borderRadius: BorderRadius.all(
+                      //                       Radius.circular(5)),
+                      //                   side: BorderSide(
+                      //                       color: Theme.of(context)
+                      //                           .accentColor
+                      //                           .withOpacity(0.5))),
+                      //               child: new Text(
+                      //                 'No',
+                      //                 style: TextStyle(
+                      //                     color: Theme.of(context).hintColor),
+                      //               ),
+                      //               onPressed: () {
+                      //                 Navigator.of(context).pop();
+                      //               },
+                      //             ),
+                      //           ],
+                      //         );
+                      //       },
+                      //     );
+                      //   },
+                      //   textColor: Theme.of(context).primaryColor,
+                      //   child: Wrap(
+                      //     children: <Widget>[Text(S.of(context).cancel + " ")],
+                      //   ),
+                      //   padding: EdgeInsets.symmetric(horizontal: 10),
+                      // ),
+                      SizedBox(
+                        width: 10,
                       ),
-                    SizedBox(
-                      width: 10,
-                    ),
                     FlatButton(
                       color: Theme.of(context).accentColor,
                       shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12))),
+                          borderRadius: BorderRadius.all(Radius.circular(5))),
                       onPressed: () {
                         Navigator.of(context).pushNamed('/OrderDetails',
                             arguments: RouteArgument(id: widget.order.id));
@@ -255,26 +250,25 @@ class _OrderItemWidgetState extends StateMVC<OrderItemWidget> {
                     ),
 
                     SizedBox(
-                      width: 30,
+                      width: 10,
                     ),
-                    if (widget.order.canEditOrder())
-                      FlatButton(
-                        color: Colors.green,
-                        shape: RoundedRectangleBorder(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(12))),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed('/OrderEdit',
-                              arguments: RouteArgument(id: widget.order.id));
-                        },
-                        textColor: Theme.of(context).primaryColor,
-                        child: Text('Accept'),
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 49, vertical: 0),
-                      ),
-                    SizedBox(
-                      width: 15,
-                    ),
+                    // if (widget.order.canEditOrder())
+                    //   FlatButton(
+                    //     color: Colors.green,
+                    //     shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.all(Radius.circular(5))),
+                    //     onPressed: () {
+                    //       Navigator.of(context).pushNamed('/OrderEdit',
+                    //           arguments: RouteArgument(id: widget.order.id));
+                    //     },
+                    //     textColor: Theme.of(context).primaryColor,
+                    //     child: Text('Accept'),
+                    //     padding:
+                    //         EdgeInsets.symmetric(horizontal: 49, vertical: 0),
+                    //   ),
+                    // SizedBox(
+                    //   width: 15,
+                    // ),
                     // if (widget.order.canEditOrder())
                     //   FlatButton(
                     //     onPressed: () {

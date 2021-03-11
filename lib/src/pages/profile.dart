@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../generated/l10n.dart';
 import '../controllers/profile_controller.dart';
@@ -44,10 +45,13 @@ class _ProfileWidgetState extends StateMVC<ProfileWidget> {
         centerTitle: true,
         title: Text(
           S.of(context).profile,
-          style: Theme.of(context).textTheme.headline6.merge(TextStyle(letterSpacing: 1.3, color: Theme.of(context).primaryColor)),
+          style: Theme.of(context).textTheme.headline6.merge(TextStyle(
+              letterSpacing: 1.3, color: Theme.of(context).primaryColor)),
         ),
         actions: <Widget>[
-          new ShoppingCartButtonWidget(iconColor: Theme.of(context).primaryColor, labelColor: Theme.of(context).hintColor),
+          new ShoppingCartButtonWidget(
+              iconColor: Theme.of(context).primaryColor,
+              labelColor: Theme.of(context).hintColor),
         ],
       ),
       key: _con.scaffoldKey,
@@ -59,24 +63,42 @@ class _ProfileWidgetState extends StateMVC<ProfileWidget> {
                 children: <Widget>[
                   ProfileAvatarWidget(user: _con.user),
                   StatisticsCarouselWidget(statisticsList: _con.statistics),
-                  ListTile(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    leading: Icon(
-                      Icons.person,
-                      color: Theme.of(context).hintColor,
-                    ),
-                    title: Text(
-                      S.of(context).about,
-                      style: Theme.of(context).textTheme.headline4,
-                    ),
+
+                  FlatButton(
+                    child: Text('call Admin'),
+                    textColor: Theme.of(context).primaryColor,
+
+                    padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                    onPressed: () {
+                      launch("tel:9061517113");
+                    },
+                    //child: Icon(
+                    //Icons.call,
+                    //color: Theme.of(context).primaryColor,
+                    //size: 24,
+
+                    color: Theme.of(context).accentColor.withOpacity(0.9),
+                    shape: StadiumBorder(),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Text(
-                      _con.user.bio,
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ),
+
+                  // ListTile(
+                  //   contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  //   leading: Icon(
+                  //     Icons.person,
+                  //     color: Theme.of(context).hintColor,
+                  //   ),
+                  //   title: Text(
+                  //     S.of(context).about,
+                  //     style: Theme.of(context).textTheme.headline4,
+                  //   ),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 20),
+                  //   child: Text(
+                  //     _con.user.bio,
+                  //     style: Theme.of(context).textTheme.bodyText2,
+                  //   ),
+                  // ),
                 ],
               ),
             ),

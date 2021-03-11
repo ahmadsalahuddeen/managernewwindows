@@ -130,7 +130,7 @@ class NotificationItemWidget extends StatelessWidget {
                                 : FontWeight.w600)),
                   ),
                   Text(
-                    DateFormat('yyyy-MM-dd | h:mm a  ')
+                    DateFormat('dd/MM/yyyy | h: mm a  ')
                         .format(notification.createdAt),
                     style: Theme.of(context).textTheme.caption,
                   )

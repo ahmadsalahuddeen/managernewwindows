@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:food_delivery_owner/src/pages/map.dart';
+import 'package:food_delivery_owner/src/pages/orderpreparing.dart';
+import 'package:food_delivery_owner/src/pages/orders2.dart';
+import 'package:food_delivery_owner/src/pages/restaurants.dart';
 
 import 'src/models/route_argument.dart';
 import 'src/pages/chat.dart';
@@ -31,10 +34,17 @@ class RouteGenerator {
 
       case '/MobileVerification':
         return MaterialPageRoute(builder: (_) => SignUpWidget());
+      // case '/Orders2':
+      //   return MaterialPageRoute(builder: (_) => Orders2Widget());
       case '/MobileVerification2':
         return MaterialPageRoute(builder: (_) => SignUpWidget());
       case '/Login':
         return MaterialPageRoute(builder: (_) => LoginWidget());
+
+      case '/Restaurant':
+        return MaterialPageRoute(builder: (_) => RestaurantsWidget());
+      case '/OrderPreparing':
+        return MaterialPageRoute(builder: (_) => OrderpreparingWidget());
       case '/ForgetPassword':
         return MaterialPageRoute(builder: (_) => ForgetPasswordWidget());
       case '/Pages':

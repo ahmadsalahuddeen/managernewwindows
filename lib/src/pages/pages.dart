@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:food_delivery_owner/src/pages/orderpreparing.dart';
+import 'package:food_delivery_owner/src/pages/orders2.dart';
 
 import '../../generated/l10n.dart';
 import '../elements/DrawerWidget.dart';
@@ -57,15 +59,15 @@ class _PagesTestWidgetState extends State<PagesTestWidget> {
       switch (tabItem) {
         case 0:
           widget.currentPage =
-              ProfileWidget(parentScaffoldKey: widget.scaffoldKey);
+              OrderpreparingWidget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 1:
           widget.currentPage =
-              OrdersWidget(parentScaffoldKey: widget.scaffoldKey);
+              Orders2Widget(parentScaffoldKey: widget.scaffoldKey);
           break;
         case 2:
           widget.currentPage =
-              RestaurantsWidget(parentScaffoldKey: widget.scaffoldKey);
+              OrdersWidget(parentScaffoldKey: widget.scaffoldKey);
 
           break;
         // case 3:
@@ -92,13 +94,13 @@ class _PagesTestWidgetState extends State<PagesTestWidget> {
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Theme.of(context).accentColor,
-          selectedFontSize: 0,
-          unselectedFontSize: 0,
+          selectedFontSize: 11,
+          unselectedFontSize: 11,
           iconSize: 22,
           elevation: 0,
           backgroundColor: Colors.transparent,
           selectedIconTheme: IconThemeData(size: 28),
-          unselectedItemColor: Theme.of(context).focusColor.withOpacity(1),
+          unselectedItemColor: Theme.of(context).hintColor,
           currentIndex: widget.currentTab,
           onTap: (int i) {
             print(i);
@@ -107,12 +109,12 @@ class _PagesTestWidgetState extends State<PagesTestWidget> {
           // this will be set when a new tab is tapped
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: '',
+              icon: Icon(Icons.local_dining_outlined),
+              label: 'Preparing',
             ),
 
             BottomNavigationBarItem(
-                label: '',
+                label: 'New Order',
                 icon: Container(
                   width: 42,
                   height: 42,
@@ -137,8 +139,8 @@ class _PagesTestWidgetState extends State<PagesTestWidget> {
                       color: Theme.of(context).primaryColor),
                 )),
             BottomNavigationBarItem(
-              icon: new Icon(Icons.store_mall_directory),
-              label: '',
+              icon: new Icon(Icons.check_box_outlined),
+              label: 'Delivered',
             ),
             // BottomNavigationBarItem(
             //   icon: new Icon(Icons.chat),

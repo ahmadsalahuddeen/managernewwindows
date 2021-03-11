@@ -49,13 +49,14 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
                     ),
                     currentAccountPicture: CircleAvatar(
                       backgroundColor: Theme.of(context).accentColor,
-                      backgroundImage: NetworkImage(currentUser.value.image.thumb),
+                      backgroundImage:
+                          NetworkImage(currentUser.value.image.thumb),
                     ),
                   ),
                 ),
                 ListTile(
                   onTap: () {
-                    Navigator.of(context).pushNamed('/Pages', arguments: 1);
+                    Navigator.of(context).pushNamed('/Restaurant');
                   },
                   leading: Icon(
                     Icons.store,
@@ -79,19 +80,19 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
-                ListTile(
-                  onTap: () {
-                    Navigator.of(context).pushNamed('/Pages', arguments: 3);
-                  },
-                  leading: Icon(
-                    Icons.chat,
-                    color: Theme.of(context).focusColor.withOpacity(1),
-                  ),
-                  title: Text(
-                    S.of(context).messages,
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ),
+                // ListTile(
+                //   onTap: () {
+                //     Navigator.of(context).pushNamed('/Pages', arguments: 3);
+                //   },
+                //   leading: Icon(
+                //     Icons.chat,
+                //     color: Theme.of(context).focusColor.withOpacity(1),
+                //   ),
+                //   title: Text(
+                //     S.of(context).messages,
+                //     style: Theme.of(context).textTheme.subtitle1,
+                //   ),
+                // ),
                 ListTile(
                   onTap: () {
                     Navigator.of(context).pushNamed('/Notifications');
@@ -171,14 +172,17 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
                     color: Theme.of(context).focusColor.withOpacity(1),
                   ),
                   title: Text(
-                    Theme.of(context).brightness == Brightness.dark ? S.of(context).light_mode : S.of(context).dark_mode,
+                    Theme.of(context).brightness == Brightness.dark
+                        ? S.of(context).light_mode
+                        : S.of(context).dark_mode,
                     style: Theme.of(context).textTheme.subtitle1,
                   ),
                 ),
                 ListTile(
                   onTap: () {
                     logout().then((value) {
-                      Navigator.of(context).pushNamedAndRemoveUntil('/Login', (Route<dynamic> route) => false);
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/Login', (Route<dynamic> route) => false);
                     });
                   },
                   leading: Icon(
@@ -194,7 +198,9 @@ class _DrawerWidgetState extends StateMVC<DrawerWidget> {
                     ? ListTile(
                         dense: true,
                         title: Text(
-                          S.of(context).version + " " + setting.value.appVersion,
+                          S.of(context).version +
+                              " " +
+                              setting.value.appVersion,
                           style: Theme.of(context).textTheme.bodyText2,
                         ),
                         trailing: Icon(

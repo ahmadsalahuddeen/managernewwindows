@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:food_delivery_owner/src/elements/FoodOrderItemWidget.dart';
 import 'package:intl/intl.dart' show DateFormat;
 import 'package:mvc_pattern/mvc_pattern.dart';
 import 'package:intl/intl.dart';
@@ -47,38 +48,43 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: FlatButton(
           onPressed: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    title: Text(S.of(context).confirmation),
-                    content: Text(
-                        "Would you please confirm if you want to save changes"),
-                    actions: <Widget>[
-                      // usually buttons at the bottom of the dialog
-                      FlatButton(
-                        textColor: Theme.of(context).focusColor,
-                        child: new Text(S.of(context).confirm),
-                        onPressed: () {
-                          _con.doUpdateOrder(_con.order);
-                        },
-                      ),
-                      FlatButton(
-                        child: new Text(S.of(context).dismiss),
-                        textColor: Theme.of(context).accentColor,
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-                    ],
-                  );
-                });
+            var _status = _con.orderStatuses.elementAt(1);
+            setState(() {
+              _con.order.orderStatus = _status;
+            });
+            _con.doUpdateOrder(_con.order);
+            // showDialog(
+            //     context: context,
+            //     builder: (context) {
+            //       return AlertDialog(
+            //         title: Text(S.of(context).confirmation),
+            //         content: Text(
+            //             "Would you please confirm if you want to save changes"),
+            //         actions: <Widget>[
+            //           // usually buttons at the bottom of the dialog
+            //           FlatButton(
+            //             textColor: Theme.of(context).focusColor,
+            //             child: new Text(S.of(context).confirm),
+            //             onPressed: () {
+            //               _con.doUpdateOrder(_con.order);
+            //             },
+            //           ),
+            //           FlatButton(
+            //             child: new Text(S.of(context).dismiss),
+            //             textColor: Theme.of(context).accentColor,
+            //             onPressed: () {
+            //               Navigator.of(context).pop();
+            //             },
+            //           ),
+            //         ],
+            //       );
+            //     });
           },
           padding: EdgeInsets.symmetric(vertical: 14),
           color: Theme.of(context).accentColor,
           shape: StadiumBorder(),
           child: Text(
-            S.of(context).saveChanges,
+            'Accept Order',
             textAlign: TextAlign.start,
             style: Theme.of(context)
                 .textTheme
@@ -154,9 +160,10 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                                     style: Theme.of(context).textTheme.caption,
                                   ),
                                   Text(
-                                    DateFormat('yyyy-MM-dd h:mm a  ', 'en')
+                                    DateFormat('dd/MM/yyyy | h: mm a  ', 'en')
                                         .format(_con.order.dateTime),
-                                    style: Theme.of(context).textTheme.caption,
+                                    style:
+                                        Theme.of(context).textTheme.subtitle2,
                                   ),
                                 ],
                               ),
@@ -179,12 +186,12 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                                   style: Theme.of(context).textTheme.caption,
                                 ),
                                 Text(
-                                  S.of(context).items +
-                                          ':' +
+                                  "items" +
+                                          ': ' +
                                           _con.order.foodOrders?.length
                                               ?.toString() ??
                                       0,
-                                  style: Theme.of(context).textTheme.caption,
+                                  style: Theme.of(context).textTheme.subtitle2,
                                 ),
                               ],
                             ),
@@ -194,173 +201,230 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
                     ],
                   ),
                 ),
-                ExpansionTile(
-                    tilePadding: EdgeInsets.symmetric(horizontal: 20),
-//                    title: Text("Assign Delivery Boy"),
-                    title: Text(S.of(context).orderStatus),
-                    initiallyExpanded: true,
-                    children: List.generate(_con.orderStatuses.length, (index) {
-                      var _status = _con.orderStatuses.elementAt(index);
-                      return RadioListTile(
-                        dense: true,
-                        groupValue: true,
-                        controlAffinity: ListTileControlAffinity.trailing,
-                        value: _con.order.orderStatus.id == _status.id,
-                        onChanged: (value) {
-                          setState(() {
-                            _con.order.orderStatus = _status;
-                          });
-                        },
-                        title: Text(
-                          " " + _status.status,
-                          style: Theme.of(context).textTheme.bodyText1,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          maxLines: 1,
-                        ),
-                      );
-                    })),
-                ExpansionTile(
-                    tilePadding: EdgeInsets.symmetric(horizontal: 20),
-                    title: Text(S.of(context).assignDeliveryBoy),
-                    initiallyExpanded: true,
-                    children: List.generate(_con.drivers.length, (index) {
-                      var _driver = _con.drivers.elementAt(index);
-                      return RadioListTile(
-                        dense: true,
-                        groupValue: true,
-                        controlAffinity: ListTileControlAffinity.trailing,
-                        value: _con.order.driver.id == _driver.id,
-                        onChanged: (value) {
-                          setState(() {
-                            _con.order.driver = _driver;
-                          });
-                        },
-                        title: Text(
-                          " " + _driver.name,
-                          style: Theme.of(context).textTheme.bodyText1,
-                          overflow: TextOverflow.fade,
-                          softWrap: false,
-                          maxLines: 1,
-                        ),
-                      );
-                    })),
-                ExpansionTile(
-                    tilePadding: EdgeInsets.symmetric(horizontal: 20),
-                    childrenPadding:
-                        EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-                    title: Text(S.of(context).generalInformation),
-                    initiallyExpanded: true,
-                    children: [
-                      TextField(
-                        keyboardType: TextInputType.text,
-                        onChanged: (String value) {
-                          _con.order.hint = value;
-                        },
-                        controller: TextEditingController()
-                          ..text = _con.order.hint,
-                        cursorColor: Theme.of(context).accentColor,
-                        maxLines: 3,
-                        decoration: InputDecoration(
-                          labelText: S.of(context).hint,
-                          labelStyle: Theme.of(context).textTheme.headline5,
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          contentPadding: EdgeInsets.all(18),
-                          hintStyle: Theme.of(context).textTheme.caption,
-                          hintText: S
-                              .of(context)
-                              .insertAnAdditionalInformationForThisOrder,
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .focusColor
-                                      .withOpacity(0.2))),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .focusColor
-                                      .withOpacity(0.5))),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .focusColor
-                                      .withOpacity(0.2))),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        onChanged: (String value) {
-                          _con.order.tax = double.tryParse(value);
-                        },
-                        controller: TextEditingController()
-                          ..text = _con.order.tax.toString(),
-                        cursorColor: Theme.of(context).accentColor,
-                        decoration: InputDecoration(
-                          labelText: S.of(context).tax,
-                          labelStyle: Theme.of(context).textTheme.headline5,
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          contentPadding: EdgeInsets.all(18),
-                          hintStyle: Theme.of(context).textTheme.caption,
-                          hintText: S
-                              .of(context)
-                              .insertAnAdditionalInformationForThisOrder,
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .focusColor
-                                      .withOpacity(0.2))),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .focusColor
-                                      .withOpacity(0.5))),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .focusColor
-                                      .withOpacity(0.2))),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      TextField(
-                        keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
-                        onChanged: (String value) {
-                          _con.order.deliveryFee = double.tryParse(value);
-                        },
-                        controller: TextEditingController()
-                          ..text = _con.order.deliveryFee.toString(),
-                        cursorColor: Theme.of(context).accentColor,
-                        decoration: InputDecoration(
-                          labelText: S.of(context).delivery_fee,
-                          labelStyle: Theme.of(context).textTheme.headline5,
-                          floatingLabelBehavior: FloatingLabelBehavior.always,
-                          contentPadding: EdgeInsets.all(18),
-                          hintStyle: Theme.of(context).textTheme.caption,
-                          hintText: S
-                              .of(context)
-                              .insertAnAdditionalInformationForThisOrder,
-                          border: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .focusColor
-                                      .withOpacity(0.2))),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .focusColor
-                                      .withOpacity(0.5))),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Theme.of(context)
-                                      .focusColor
-                                      .withOpacity(0.2))),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                    ]),
+                Column(
+                    children: List.generate(
+                  _con.order.foodOrders.length,
+                  (indexFood) {
+                    return FoodOrderItemWidget(
+                        heroTag: 'my_con.orders',
+                        order: _con.order,
+                        foodOrder: _con.order.foodOrders.elementAt(indexFood));
+                  },
+                )),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                //   child: Column(
+                //     children: <Widget>[
+                //       Row(
+                //         children: <Widget>[
+                //           Expanded(
+                //             child: Text(
+                //               S.of(context).delivery_fee,
+                //               style: Theme.of(context).textTheme.bodyText1,
+                //             ),
+                //           ),
+                //           Helper.getPrice(_con.order.deliveryFee, context,
+                //               style: Theme.of(context).textTheme.subtitle1)
+                //         ],
+                //       ),
+                //       Row(
+                //         children: <Widget>[
+                //           Expanded(
+                //             child: Text(
+                //               '${S.of(context).tax} (${_con.order.tax}%)',
+                //               style: Theme.of(context).textTheme.bodyText1,
+                //             ),
+                //           ),
+                //           Helper.getPrice(
+                //               Helper.getTaxOrder(_con.order), context,
+                //               style: Theme.of(context).textTheme.subtitle1)
+                //         ],
+                //       ),
+                //       Row(
+                //         children: <Widget>[
+                //           Expanded(
+                //             child: Text(
+                //               S.of(context).total,
+                //               style: Theme.of(context).textTheme.bodyText1,
+                //             ),
+                //           ),
+                //           Helper.getPrice(
+                //               Helper.getTotalOrdersPrice(_con.order), context,
+                //               style: Theme.of(context).textTheme.headline4)
+                //         ],
+                //       ),
+                //     ],
+                //   ),
+                // )
+//                 ExpansionTile(
+//                     tilePadding: EdgeInsets.symmetric(horizontal: 20),
+// //                    title: Text("Assign Delivery Boy"),
+//                     title: Text(S.of(context).orderStatus),
+//                     initiallyExpanded: true,
+//                     children: List.generate(_con.orderStatuses.length, (index) {
+//                       var _status = _con.orderStatuses.elementAt(1);
+//                       var val1 = _con.order.orderStatus.id == _status.id;
+//                       return RadioListTile(
+//                         dense: true,
+//                         groupValue: true,
+//                         controlAffinity: ListTileControlAffinity.trailing,
+//                         value: val1,
+//                         selected: true,
+//                         onChanged: (value) {
+//                           setState(() {
+//                             _con.order.orderStatus = _status;
+//                           });
+//                         },
+//                         title: Text(
+//                           " " + _status.status,
+//                           style: Theme.of(context).textTheme.bodyText1,
+//                           overflow: TextOverflow.fade,
+//                           softWrap: false,
+//                           maxLines: 1,
+//                         ),
+//                       );
+//                     })),
+                // ExpansionTile(
+                //     tilePadding: EdgeInsets.symmetric(horizontal: 20),
+                //     title: Text(S.of(context).assignDeliveryBoy),
+                //     initiallyExpanded: true,
+                //     children: List.generate(_con.drivers.length, (index) {
+                //       var _driver = _con.drivers.elementAt(index);
+                //       return RadioListTile(
+                //         dense: true,
+                //         groupValue: true,
+                //         controlAffinity: ListTileControlAffinity.trailing,
+                //         value: _con.order.driver.id == _driver.id,
+                //         onChanged: (value) {
+                //           setState(() {
+                //             _con.order.driver = _driver;
+                //           });
+                //         },
+                //         title: Text(
+                //           " " + _driver.name,
+                //           style: Theme.of(context).textTheme.bodyText1,
+                //           overflow: TextOverflow.fade,
+                //           softWrap: false,
+                //           maxLines: 1,
+                //         ),
+                //       );
+                //     })),
+                // ExpansionTile(
+                //     tilePadding: EdgeInsets.symmetric(horizontal: 20),
+                //     childrenPadding:
+                //         EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+                //     title: Text(S.of(context).generalInformation),
+                //     initiallyExpanded: true,
+                //     children: [
+                //       TextField(
+                //         keyboardType: TextInputType.text,
+                //         onChanged: (String value) {
+                //           _con.order.hint = value;
+                //         },
+                //         controller: TextEditingController()
+                //           ..text = _con.order.hint,
+                //         cursorColor: Theme.of(context).accentColor,
+                //         maxLines: 3,
+                //         decoration: InputDecoration(
+                //           labelText: S.of(context).hint,
+                //           labelStyle: Theme.of(context).textTheme.headline5,
+                //           floatingLabelBehavior: FloatingLabelBehavior.always,
+                //           contentPadding: EdgeInsets.all(18),
+                //           hintStyle: Theme.of(context).textTheme.caption,
+                //           hintText: S
+                //               .of(context)
+                //               .insertAnAdditionalInformationForThisOrder,
+                //           border: OutlineInputBorder(
+                //               borderSide: BorderSide(
+                //                   color: Theme.of(context)
+                //                       .focusColor
+                //                       .withOpacity(0.2))),
+                //           focusedBorder: OutlineInputBorder(
+                //               borderSide: BorderSide(
+                //                   color: Theme.of(context)
+                //                       .focusColor
+                //                       .withOpacity(0.5))),
+                //           enabledBorder: OutlineInputBorder(
+                //               borderSide: BorderSide(
+                //                   color: Theme.of(context)
+                //                       .focusColor
+                //                       .withOpacity(0.2))),
+                //         ),
+                //       ),
+                //       SizedBox(height: 20),
+                //       TextField(
+                //         keyboardType:
+                //             TextInputType.numberWithOptions(decimal: true),
+                //         onChanged: (String value) {
+                //           _con.order.tax = double.tryParse(value);
+                //         },
+                //         controller: TextEditingController()
+                //           ..text = _con.order.tax.toString(),
+                //         cursorColor: Theme.of(context).accentColor,
+                //         decoration: InputDecoration(
+                //           labelText: S.of(context).tax,
+                //           labelStyle: Theme.of(context).textTheme.headline5,
+                //           floatingLabelBehavior: FloatingLabelBehavior.always,
+                //           contentPadding: EdgeInsets.all(18),
+                //           hintStyle: Theme.of(context).textTheme.caption,
+                //           hintText: S
+                //               .of(context)
+                //               .insertAnAdditionalInformationForThisOrder,
+                //           border: OutlineInputBorder(
+                //               borderSide: BorderSide(
+                //                   color: Theme.of(context)
+                //                       .focusColor
+                //                       .withOpacity(0.2))),
+                //           focusedBorder: OutlineInputBorder(
+                //               borderSide: BorderSide(
+                //                   color: Theme.of(context)
+                //                       .focusColor
+                //                       .withOpacity(0.5))),
+                //           enabledBorder: OutlineInputBorder(
+                //               borderSide: BorderSide(
+                //                   color: Theme.of(context)
+                //                       .focusColor
+                //                       .withOpacity(0.2))),
+                //         ),
+                //       ),
+                //       SizedBox(height: 20),
+                //       TextField(
+                //         keyboardType:
+                //             TextInputType.numberWithOptions(decimal: true),
+                //         onChanged: (String value) {
+                //           _con.order.deliveryFee = double.tryParse(value);
+                //         },
+                //         controller: TextEditingController()
+                //           ..text = _con.order.deliveryFee.toString(),
+                //         cursorColor: Theme.of(context).accentColor,
+                //         decoration: InputDecoration(
+                //           labelText: S.of(context).delivery_fee,
+                //           labelStyle: Theme.of(context).textTheme.headline5,
+                //           floatingLabelBehavior: FloatingLabelBehavior.always,
+                //           contentPadding: EdgeInsets.all(18),
+                //           hintStyle: Theme.of(context).textTheme.caption,
+                //           hintText: S
+                //               .of(context)
+                //               .insertAnAdditionalInformationForThisOrder,
+                //           border: OutlineInputBorder(
+                //               borderSide: BorderSide(
+                //                   color: Theme.of(context)
+                //                       .focusColor
+                //                       .withOpacity(0.2))),
+                //           focusedBorder: OutlineInputBorder(
+                //               borderSide: BorderSide(
+                //                   color: Theme.of(context)
+                //                       .focusColor
+                //                       .withOpacity(0.5))),
+                //           enabledBorder: OutlineInputBorder(
+                //               borderSide: BorderSide(
+                //                   color: Theme.of(context)
+                //                       .focusColor
+                //                       .withOpacity(0.2))),
+                //         ),
+                //       ),
+                //       SizedBox(height: 20),
+                //     ]),
               ],
             ),
     );

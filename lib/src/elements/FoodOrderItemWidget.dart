@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../helpers/helper.dart';
@@ -11,7 +12,8 @@ class FoodOrderItemWidget extends StatelessWidget {
   final FoodOrder foodOrder;
   final Order order;
 
-  const FoodOrderItemWidget({Key key, this.foodOrder, this.order, this.heroTag}) : super(key: key);
+  const FoodOrderItemWidget({Key key, this.foodOrder, this.order, this.heroTag})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,8 @@ class FoodOrderItemWidget extends StatelessWidget {
       focusColor: Theme.of(context).accentColor,
       highlightColor: Theme.of(context).primaryColor,
       onTap: () {
-        Navigator.of(context).pushNamed('/OrderDetails', arguments: RouteArgument(id: order.id));
+        Navigator.of(context)
+            .pushNamed('/OrderDetails', arguments: RouteArgument(id: order.id));
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -65,19 +68,21 @@ class FoodOrderItemWidget extends StatelessWidget {
                           style: Theme.of(context).textTheme.subtitle1,
                         ),
                         Wrap(
-                          children: List.generate(foodOrder.extras.length, (index) {
+                          children:
+                              List.generate(foodOrder.extras.length, (index) {
                             return Text(
                               foodOrder.extras.elementAt(index).name + ', ',
                               style: Theme.of(context).textTheme.caption,
                             );
                           }),
                         ),
-                        Text(
-                          foodOrder.food.restaurant.name,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: Theme.of(context).textTheme.caption,
-                        ),
+                        //TODO edit
+                        // Text(
+                        //   foodOrder.food.restaurant.name,
+                        //   overflow: TextOverflow.ellipsis,
+                        //   maxLines: 2,
+                        //   style: Theme.of(context).textTheme.caption,
+                        // ),
                       ],
                     ),
                   ),
@@ -86,10 +91,11 @@ class FoodOrderItemWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: <Widget>[
-                      Helper.getPrice(Helper.getOrderPrice(foodOrder), context, style: Theme.of(context).textTheme.subtitle1),
+                      Helper.getPrice(Helper.getOrderPrice(foodOrder), context,
+                          style: Theme.of(context).textTheme.subtitle1),
                       Text(
                         " x " + foodOrder.quantity.toString(),
-                        style: Theme.of(context).textTheme.caption,
+                        style: Theme.of(context).textTheme.headline4,
                       ),
                     ],
                   ),

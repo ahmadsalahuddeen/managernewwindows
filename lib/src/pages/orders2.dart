@@ -2,27 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../../generated/l10n.dart';
-import '../controllers/order_controller.dart';
+import '../controllers/order_controller2.dart';
 import '../elements/EmptyOrdersWidget.dart';
 import '../elements/OrderItemWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../elements/StatisticsCarouselWidget.dart';
-import '../repository/settings_repository.dart' as settingsRepo;
 
-class OrdersWidget extends StatefulWidget {
+class Orders2Widget extends StatefulWidget {
   final GlobalKey<ScaffoldState> parentScaffoldKey;
 
-  OrdersWidget({Key key, this.parentScaffoldKey}) : super(key: key);
+  Orders2Widget({Key key, this.parentScaffoldKey}) : super(key: key);
 
   @override
-  _OrdersWidgetState createState() => _OrdersWidgetState();
+  _Orders2WidgetState createState() => _Orders2WidgetState();
 }
 
-class _OrdersWidgetState extends StateMVC<OrdersWidget> {
-  OrderController _con;
+class _Orders2WidgetState extends StateMVC<Orders2Widget> {
+  OrderController2 _con;
 
-  _OrdersWidgetState() : super(OrderController()) {
+  _Orders2WidgetState() : super(OrderController2()) {
     _con = controller;
   }
 
@@ -30,7 +27,7 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
   void initState() {
     _con.listenForOrders();
     _con.listenForStatistics();
-    _con.listenForOrderStatus(insertAll: true);
+    _con.listenForOrderStatus(insertAll: false);
     _con.selectedStatuses = ['0'];
     super.initState();
   }
@@ -49,7 +46,7 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Delivered',
+          'New Orders',
           style: Theme.of(context).textTheme.headline4.merge(
                 TextStyle(color: Theme.of(context).hintColor),
               ),
@@ -64,7 +61,40 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
         onRefresh: _con.refreshOrders,
         child: ListView(
           children: [
-            StatisticsCarouselWidget(statisticsList: _con.statistics),
+            // Center(
+            //     child: Text(
+            //   'New Orders',
+            //   style: Theme.of(context).textTheme.headline4.merge(
+            //         TextStyle(color: Theme.of(context).hintColor),
+            //       ),
+            // )),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     top: 15,
+            //   ),
+            //   child:
+            // Center(
+            //   child: ListTile(
+            //     dense: true,
+            //     contentPadding:
+            //         EdgeInsets.symmetric(vertical: 0, horizontal: 40),
+            //     // leading: Icon(
+            //     //   Icons.restaurant_menu,
+            //     //   color: Theme.of(context).hintColor,
+            //     // ),
+            //     title: Text(
+            //       "Restaurants",
+            //       style: Theme.of(context).textTheme.headline4,
+            //     ),
+            //     subtitle: Text(
+            //       "Click on the Hotel to get more details about it   ",
+            //       maxLines: 2,
+            //       style: Theme.of(context).textTheme.caption,
+            //     ),
+            //   ),
+            // ),
+            //),
+            //StatisticsCarouselWidget(statisticsList: _con.statistics),
             Stack(
               children: [
                 // _con.orderStatuses.isEmpty
@@ -133,7 +163,7 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
                   EmptyOrdersWidget()
                 else
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 20),
                     child: ListView.separated(
                       scrollDirection: Axis.vertical,
                       reverse: true,

@@ -58,7 +58,7 @@ class TrackingController extends ControllerMVC {
         ),
         subtitle: order.orderStatus.id == _orderStatus.id
             ? Text(
-                '${DateFormat('h:mm a   | yyyy-MM-dd').format(order.dateTime)}',
+                '${DateFormat('dd/MM/yyyy / h: mm a  ').format(order.dateTime)}',
                 style: Theme.of(context).textTheme.caption,
                 overflow: TextOverflow.ellipsis,
               )

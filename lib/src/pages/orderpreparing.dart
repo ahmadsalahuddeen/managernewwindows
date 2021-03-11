@@ -1,36 +1,34 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:food_delivery_owner/src/elements/OrderItemWidget2.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
 
-import '../../generated/l10n.dart';
-import '../controllers/order_controller.dart';
+import '../controllers/order_controller2.dart';
 import '../elements/EmptyOrdersWidget.dart';
 import '../elements/OrderItemWidget.dart';
 import '../elements/ShoppingCartButtonWidget.dart';
-import '../elements/StatisticsCarouselWidget.dart';
-import '../repository/settings_repository.dart' as settingsRepo;
 
-class OrdersWidget extends StatefulWidget {
+class OrderpreparingWidget extends StatefulWidget {
   final GlobalKey<ScaffoldState> parentScaffoldKey;
 
-  OrdersWidget({Key key, this.parentScaffoldKey}) : super(key: key);
+  OrderpreparingWidget({Key key, this.parentScaffoldKey}) : super(key: key);
 
   @override
-  _OrdersWidgetState createState() => _OrdersWidgetState();
+  _OrderpreparingWidgetState createState() => _OrderpreparingWidgetState();
 }
 
-class _OrdersWidgetState extends StateMVC<OrdersWidget> {
-  OrderController _con;
+class _OrderpreparingWidgetState extends StateMVC<OrderpreparingWidget> {
+  OrderController2 _con;
 
-  _OrdersWidgetState() : super(OrderController()) {
+  _OrderpreparingWidgetState() : super(OrderController2()) {
     _con = controller;
   }
 
   @override
   void initState() {
-    _con.listenForOrders();
+    _con.listenForOrders2();
     _con.listenForStatistics();
-    _con.listenForOrderStatus(insertAll: true);
+    _con.listenForOrderStatus(insertAll: false);
     _con.selectedStatuses = ['0'];
     super.initState();
   }
@@ -49,7 +47,7 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          'Delivered',
+          'Preparing',
           style: Theme.of(context).textTheme.headline4.merge(
                 TextStyle(color: Theme.of(context).hintColor),
               ),
@@ -64,7 +62,40 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
         onRefresh: _con.refreshOrders,
         child: ListView(
           children: [
-            StatisticsCarouselWidget(statisticsList: _con.statistics),
+            // Center(
+            //     child: Text(
+            //   'New Orders',
+            //   style: Theme.of(context).textTheme.headline4.merge(
+            //         TextStyle(color: Theme.of(context).hintColor),
+            //       ),
+            // )),
+            // Padding(
+            //   padding: const EdgeInsets.only(
+            //     top: 15,
+            //   ),
+            //   child:
+            // Center(
+            //   child: ListTile(
+            //     dense: true,
+            //     contentPadding:
+            //         EdgeInsets.symmetric(vertical: 0, horizontal: 40),
+            //     // leading: Icon(
+            //     //   Icons.restaurant_menu,
+            //     //   color: Theme.of(context).hintColor,
+            //     // ),
+            //     title: Text(
+            //       "Restaurants",
+            //       style: Theme.of(context).textTheme.headline4,
+            //     ),
+            //     subtitle: Text(
+            //       "Click on the Hotel to get more details about it   ",
+            //       maxLines: 2,
+            //       style: Theme.of(context).textTheme.caption,
+            //     ),
+            //   ),
+            // ),
+            //),
+            //StatisticsCarouselWidget(statisticsList: _con.statistics),
             Stack(
               children: [
                 // _con.orderStatuses.isEmpty
@@ -133,7 +164,7 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
                   EmptyOrdersWidget()
                 else
                   Padding(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.only(top: 20),
                     child: ListView.separated(
                       scrollDirection: Axis.vertical,
                       reverse: true,
@@ -142,7 +173,7 @@ class _OrdersWidgetState extends StateMVC<OrdersWidget> {
                       itemCount: _con.orders.length,
                       itemBuilder: (context, index) {
                         var _order = _con.orders.elementAt(index);
-                        return OrderItemWidget(
+                        return OrderItem2Widget(
                           expanded: index == 0 ? true : true,
                           order: _order,
                           onCanceled: (e) {

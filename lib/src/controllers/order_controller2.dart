@@ -11,7 +11,7 @@ import '../repository/dashboard_repository.dart';
 import '../repository/order_repository.dart';
 import '../repository/user_repository.dart';
 
-class OrderController extends ControllerMVC {
+class OrderController2 extends ControllerMVC {
   Order order;
   List<Order> orders = <Order>[];
   List<OrderStatus> orderStatuses = <OrderStatus>[];
@@ -20,7 +20,7 @@ class OrderController extends ControllerMVC {
   List<Statistic> statistics = <Statistic>[];
   GlobalKey<ScaffoldState> scaffoldKey;
 
-  OrderController() {
+  OrderController2() {
     this.scaffoldKey = new GlobalKey<ScaffoldState>();
   }
 
@@ -89,7 +89,29 @@ class OrderController extends ControllerMVC {
 
   void listenForOrders({statusesIds, String message}) async {
     final Stream<Order> stream = await getOrders(
-      statusesIds: selectedStatuses = ['5'],
+      statusesIds: selectedStatuses = ['1'],
+    );
+    stream.listen((Order _order) {
+      setState(() {
+        orders.add(_order);
+      });
+    }, onError: (a) {
+      print(a);
+      scaffoldKey?.currentState?.showSnackBar(SnackBar(
+        content: Text(S.of(context).verify_your_internet_connection),
+      ));
+    }, onDone: () {
+      if (message != null) {
+        scaffoldKey?.currentState?.showSnackBar(SnackBar(
+          content: Text(message),
+        ));
+      }
+    });
+  }
+
+  void listenForOrders2({statusesIds, String message}) async {
+    final Stream<Order> stream = await getOrders(
+      statusesIds: selectedStatuses = ['2'],
     );
     stream.listen((Order _order) {
       setState(() {
@@ -176,6 +198,7 @@ class OrderController extends ControllerMVC {
       ));
     }).whenComplete(() {
       //refreshOrders();
+
       scaffoldKey?.currentState?.showSnackBar(SnackBar(
         content: Text(S.of(context).orderIdHasBeenCanceled(order.id)),
       ));

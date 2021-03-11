@@ -130,19 +130,21 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                             style: Theme.of(context).textTheme.subtitle1)
                       ],
                     ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            '${S.of(context).tax} (${_con.order.tax}%)',
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                        ),
-                        Helper.getPrice(Helper.getTaxOrder(_con.order), context,
-                            style: Theme.of(context).textTheme.subtitle1)
-                      ],
+                    // Row(
+                    //   children: <Widget>[
+                    //     Expanded(
+                    //       child: Text(
+                    //         '${S.of(context).tax} (${_con.order.tax}%)',
+                    //         style: Theme.of(context).textTheme.bodyText1,
+                    //       ),
+                    //     ),
+                    //     Helper.getPrice(Helper.getTaxOrder(_con.order), context,
+                    //         style: Theme.of(context).textTheme.subtitle1)
+                    //   ],
+                    // ),
+                    Divider(
+                      height: 20,
                     ),
-                    Divider(height: 20),
                     Row(
                       children: <Widget>[
                         Expanded(
@@ -181,7 +183,7 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                               borderSide: BorderSide(
                                   color: Theme.of(context).accentColor),
                               child: Text(
-                                S.of(context).edit,
+                                'Edit',
                               ),
                             ),
                           SizedBox(width: 10),
@@ -192,7 +194,6 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        // return object of type Dialog
                                         return AlertDialog(
                                           title: Wrap(
                                             spacing: 10,
@@ -206,13 +207,19 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                                               ),
                                             ],
                                           ),
-                                          content: Text(S
-                                              .of(context)
-                                              .areYouSureYouWantToCancelThisOrderOf),
+                                          content: Text('Cancel the order ?'),
                                           contentPadding: EdgeInsets.symmetric(
                                               horizontal: 30, vertical: 25),
                                           actions: <Widget>[
                                             FlatButton(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(5)),
+                                                  side: BorderSide(
+                                                      color: Theme.of(context)
+                                                          .accentColor
+                                                          .withOpacity(0.5))),
                                               child: new Text(
                                                 S.of(context).yes,
                                                 style: TextStyle(
@@ -224,11 +231,23 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                                                 Navigator.of(context).pop();
                                               },
                                             ),
+                                            SizedBox(
+                                              width: 10,
+                                            ),
                                             FlatButton(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(5)),
+                                                  side: BorderSide(
+                                                      color: Theme.of(context)
+                                                          .accentColor
+                                                          .withOpacity(0.5))),
                                               child: new Text(
-                                                S.of(context).close,
+                                                'No',
                                                 style: TextStyle(
-                                                    color: Colors.orange),
+                                                    color: Theme.of(context)
+                                                        .hintColor),
                                               ),
                                               onPressed: () {
                                                 Navigator.of(context).pop();
@@ -236,6 +255,50 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                                             ),
                                           ],
                                         );
+                                        // return object of type Dialog
+                                        // return AlertDialog(
+                                        //   title: Wrap(
+                                        //     spacing: 10,
+                                        //     children: <Widget>[
+                                        //       Icon(Icons.report,
+                                        //           color: Colors.orange),
+                                        //       Text(
+                                        //         S.of(context).confirmation,
+                                        //         style: TextStyle(
+                                        //             color: Colors.orange),
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        //   content: Text(S
+                                        //       .of(context)
+                                        //       .areYouSureYouWantToCancelThisOrderOf),
+                                        //   contentPadding: EdgeInsets.symmetric(
+                                        //       horizontal: 30, vertical: 25),
+                                        //   actions: <Widget>[
+                                        //     FlatButton(
+                                        //       child: new Text(
+                                        //         S.of(context).yes,
+                                        //         style: TextStyle(
+                                        //             color: Theme.of(context)
+                                        //                 .hintColor),
+                                        //       ),
+                                        //       onPressed: () {
+                                        //         _con.doCancelOrder(_con.order);
+                                        //         Navigator.of(context).pop();
+                                        //       },
+                                        //     ),
+                                        //     FlatButton(
+                                        //       child: new Text(
+                                        //         S.of(context).close,
+                                        //         style: TextStyle(
+                                        //             color: Colors.orange),
+                                        //       ),
+                                        //       onPressed: () {
+                                        //         Navigator.of(context).pop();
+                                        //       },
+                                        //     ),
+                                        //   ],
+                                        // );
                                       },
                                     );
                                   },
@@ -330,8 +393,7 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                                           Theme.of(context).textTheme.caption,
                                     ),
                                     Text(
-                                      DateFormat(
-                                              'yyyy-MM-dd    h :mm a  ', 'en')
+                                      DateFormat('dd/MM/yyyy | h: mm a  ', 'en')
                                           .format(_con.order.dateTime),
                                       style:
                                           Theme.of(context).textTheme.bodyText1,
@@ -344,12 +406,12 @@ class _OrderWidgetState extends StateMVC<OrderWidget>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: <Widget>[
-                                  Helper.getPrice(
-                                      Helper.getTotalOrdersPrice(_con.order),
-                                      context,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headline4),
+                                  // Helper.getPrice(
+                                  //     Helper.getTotalOrdersPrice(_con.order),
+                                  //     context,
+                                  //     style: Theme.of(context)
+                                  //         .textTheme
+                                  //         .headline4),
                                   Text(
                                     _con.order.payment?.method ??
                                         S.of(context).cash_on_delivery,

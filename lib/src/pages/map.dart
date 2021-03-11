@@ -175,7 +175,7 @@ class _MapWidgetState extends StateMVC<MapWidget> {
                               style: Theme.of(context).textTheme.caption,
                             ),
                             Text(
-                              DateFormat('yyyy-MM-dd h:mm a  ', 'en')
+                              DateFormat('dd/MM/yyyy | h: mm a  ', 'en')
                                   .format(_con.currentOrder.dateTime),
                               style: Theme.of(context).textTheme.caption,
                             ),

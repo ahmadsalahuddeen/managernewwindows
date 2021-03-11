@@ -25,16 +25,32 @@ class Order {
     try {
       id = jsonMap['id'].toString();
       tax = jsonMap['tax'] != null ? jsonMap['tax'].toDouble() : 0.0;
-      deliveryFee = jsonMap['delivery_fee'] != null ? jsonMap['delivery_fee'].toDouble() : 0.0;
+      deliveryFee = jsonMap['delivery_fee'] != null
+          ? jsonMap['delivery_fee'].toDouble()
+          : 0.0;
       hint = jsonMap['hint'] != null ? jsonMap['hint'].toString() : '';
       active = jsonMap['active'] ?? false;
-      orderStatus = jsonMap['order_status'] != null ? OrderStatus.fromJSON(jsonMap['order_status']) : OrderStatus.fromJSON({});
+      orderStatus = jsonMap['order_status'] != null
+          ? OrderStatus.fromJSON(jsonMap['order_status'])
+          : OrderStatus.fromJSON({});
       dateTime = DateTime.parse(jsonMap['updated_at']);
-      user = jsonMap['user'] != null ? User.fromJSON(jsonMap['user']) : User.fromJSON({});
-      driver = jsonMap['driver'] != null ? User.fromJSON(jsonMap['driver']) : User.fromJSON({});
-      deliveryAddress = jsonMap['delivery_address'] != null ? Address.fromJSON(jsonMap['delivery_address']) : Address.fromJSON({});
-      payment = jsonMap['payment'] != null ? Payment.fromJSON(jsonMap['payment']) : Payment.fromJSON({});
-      foodOrders = jsonMap['food_orders'] != null ? List.from(jsonMap['food_orders']).map((element) => FoodOrder.fromJSON(element)).toList() : [];
+      user = jsonMap['user'] != null
+          ? User.fromJSON(jsonMap['user'])
+          : User.fromJSON({});
+      driver = jsonMap['driver'] != null
+          ? User.fromJSON(jsonMap['driver'])
+          : User.fromJSON({});
+      deliveryAddress = jsonMap['delivery_address'] != null
+          ? Address.fromJSON(jsonMap['delivery_address'])
+          : Address.fromJSON({});
+      payment = jsonMap['payment'] != null
+          ? Payment.fromJSON(jsonMap['payment'])
+          : Payment.fromJSON({});
+      foodOrders = jsonMap['food_orders'] != null
+          ? List.from(jsonMap['food_orders'])
+              .map((element) => FoodOrder.fromJSON(element))
+              .toList()
+          : [];
     } catch (e) {
       id = '';
       tax = 0.0;
@@ -84,15 +100,18 @@ class Order {
   Map cancelMap() {
     var map = new Map<String, dynamic>();
     map["id"] = id;
-    if (orderStatus?.id != null && orderStatus?.id == '1') map["active"] = false;
+    if (orderStatus?.id != null && orderStatus?.id == '1')
+      map["active"] = false;
     return map;
   }
 
   bool canCancelOrder() {
-    return this.active == true && this.orderStatus.id == '1'; // 1 for order received status
+    return this.active == true &&
+        this.orderStatus.id == '1'; // 1 for order received status
   }
 
   bool canEditOrder() {
-    return this.active == true && this.orderStatus.id != '5'; // 5 for order delivered status
+    return this.active == true &&
+        this.orderStatus.id != '5'; // 5 for order delivered status
   }
 }

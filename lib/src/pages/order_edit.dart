@@ -33,7 +33,7 @@ class _OrderEditWidgetState extends StateMVC<OrderEditWidget> {
 
   @override
   void initState() {
-    _con.listenForOrder(id: widget.routeArgument.id, withDrivers: true);
+    _con.listenForOrder(id: widget.routeArgument.id, withDrivers: false);
     _con.listenForOrderStatus();
 //    _con.listenForDrivers();
     super.initState();

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:mvc_pattern/mvc_pattern.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/order_controller2.dart';
 import '../elements/EmptyOrdersWidget.dart';
@@ -21,6 +24,21 @@ class _Orders2WidgetState extends StateMVC<Orders2Widget> {
 
   _Orders2WidgetState() : super(OrderController2()) {
     _con = controller;
+  }
+  void launchWhatsapp({@required number, @required message}) async {
+    String url = "whatsapp://send?phone=$number&text=$message";
+
+    await canLaunch(url) ? launch(url) : print("Cant open whatsapp");
+  }
+
+  Future<void> _launched;
+  String _phone = "9061517113";
+  Future<void> _makePhoneCall(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 
   @override
@@ -189,6 +207,97 @@ class _Orders2WidgetState extends StateMVC<Orders2Widget> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: SpeedDial(
+        /// both default to 16
+        // marginEnd: 18,
+        marginBottom: 10,
+        // animatedIcon: AnimatedIcons.menu_close,
+        // animatedIconTheme: IconThemeData(size: 22.0),
+        /// This is ignored if animatedIcon is non null
+        icon: Icons.call,
+        activeIcon: Icons.close_outlined,
+        iconTheme: IconThemeData(size: 30),
+
+        /// The label of the main button.
+        // label: Text("Open Speed Dial"),
+        /// The active label of the main button, Defaults to label if not specified.
+        // activeLabel: Text("Close Speed Dial"),
+        /// Transition Builder between label and activeLabel, defaults to FadeTransition.
+        // labelTransitionBuilder: (widget, animation) => ScaleTransition(scale: animation,child: widget),
+        /// The below button size defaults to 56 itself, its the FAB size + It also affects relative padding and other elements
+        //buttonSize: 56.0,
+        //visible: true,
+
+        /// If true user is forced to close dial manually
+        /// by tapping main button and overlay is not rendered.
+        closeManually: false,
+        curve: Curves.bounceIn,
+
+        overlayColor: Theme.of(context).primaryColor,
+        overlayOpacity: 0.6,
+        //onOpen: () => print('OPENING DIAL'),
+        //onClose: () => print('DIAL CLOSED'),
+        tooltip: 'Speed Dial',
+        heroTag: 'speed-dial-hero-tag',
+        backgroundColor: Theme.of(context).accentColor,
+        foregroundColor: Theme.of(context).primaryColor,
+        //elevation: 8.0,
+        shape: CircleBorder(),
+        orientation: SpeedDialOrientation.Up,
+        // childMarginBottom: 2,
+        // childMarginTop: 2,
+        //animatedIcon: AnimatedIcons.menu_close,
+        // overlayOpacity: 0.6,
+        children: [
+          SpeedDialChild(
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Theme.of(context).primaryColor,
+            labelBackgroundColor: Theme.of(context).primaryColor,
+            child: Icon(Icons.call),
+            label: "Call",
+            onTap: () => setState(() {
+              _launched = _makePhoneCall('tel:$_phone');
+            }),
+          ),
+
+          SpeedDialChild(
+            backgroundColor: Theme.of(context).accentColor,
+            foregroundColor: Theme.of(context).primaryColor,
+            labelBackgroundColor: Theme.of(context).primaryColor,
+            child: Icon(
+              FontAwesomeIcons.whatsapp,
+            ),
+            label: "WhatsApp",
+            onTap: () =>
+                launchWhatsapp(number: "+919061517113", message: "hello"),
+          ),
+
+          // SpeedDialChild(
+          //   backgroundColor: Theme.of(context).accentColor,
+          //   foregroundColor: Theme.of(context).primaryColor,
+          //   labelBackgroundColor: Theme.of(context).primaryColor,
+          //   child: Icon(FontAwesomeIcons.instagram),
+          //   label: "Instagram",
+          //   onTap: () => _launchURL2(),
+          // ),
+
+          // SpeedDialChild(
+
+          //   child:  Icon(FontAwesomeIcons.globe,),
+          //   label: "Support / Help",
+          //   onTap: () => _launchURL(),
+          // ),
+          // SpeedDialChild(
+          //   backgroundColor: Theme.of(context).accentColor,
+          //   foregroundColor: Theme.of(context).primaryColor,
+          //   labelBackgroundColor: Theme.of(context).primaryColor,
+          //   child: Icon(Icons.share),
+          //   label: "Share The App",
+          //   onTap: () => Share.share(
+          //       "Download Fazmart Now https://play.google.com/store/apps/details?id=com.fazmart&hl=en_IN&gl=US"),
+          // ),
+        ],
       ),
     );
   }

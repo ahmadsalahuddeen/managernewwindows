@@ -54,14 +54,17 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                   shrinkWrap: false,
                   slivers: <Widget>[
                     SliverAppBar(
-                      backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
+                      backgroundColor:
+                          Theme.of(context).accentColor.withOpacity(0.9),
                       expandedHeight: 300,
                       elevation: 0,
-                      iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+                      iconTheme:
+                          IconThemeData(color: Theme.of(context).primaryColor),
                       flexibleSpace: FlexibleSpaceBar(
                         collapseMode: CollapseMode.parallax,
                         background: Hero(
-                          tag: (widget?.routeArgument?.heroTag ?? '') + _con.restaurant.id,
+                          tag: (widget?.routeArgument?.heroTag ?? '') +
+                              _con.restaurant.id,
                           child: CachedNetworkImage(
                             fit: BoxFit.cover,
                             imageUrl: _con.restaurant.image.url,
@@ -69,7 +72,8 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                               'assets/img/loading.gif',
                               fit: BoxFit.cover,
                             ),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
+                            errorWidget: (context, url, error) =>
+                                Icon(Icons.error),
                           ),
                         ),
                       ),
@@ -78,7 +82,8 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                       child: Wrap(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(right: 20, left: 20, bottom: 10, top: 25),
+                            padding: const EdgeInsets.only(
+                                right: 20, left: 20, bottom: 10, top: 25),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
@@ -88,7 +93,8 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                     overflow: TextOverflow.fade,
                                     softWrap: false,
                                     maxLines: 2,
-                                    style: Theme.of(context).textTheme.headline3,
+                                    style:
+                                        Theme.of(context).textTheme.headline3,
                                   ),
                                 ),
                                 SizedBox(
@@ -96,10 +102,16 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                   child: Chip(
                                     padding: EdgeInsets.all(0),
                                     label: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: <Widget>[
                                         Text(_con.restaurant.rate,
-                                            style: Theme.of(context).textTheme.bodyText1.merge(TextStyle(color: Theme.of(context).primaryColor))),
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyText1
+                                                .merge(TextStyle(
+                                                    color: Theme.of(context)
+                                                        .primaryColor))),
                                         Icon(
                                           Icons.star_border,
                                           color: Theme.of(context).primaryColor,
@@ -107,7 +119,9 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                         ),
                                       ],
                                     ),
-                                    backgroundColor: Theme.of(context).accentColor.withOpacity(0.9),
+                                    backgroundColor: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.9),
                                     shape: StadiumBorder(),
                                   ),
                                 ),
@@ -118,40 +132,72 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                             children: <Widget>[
                               SizedBox(width: 20),
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
-                                decoration: BoxDecoration(color: _con.restaurant.closed ? Colors.grey : Colors.green, borderRadius: BorderRadius.circular(24)),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 3),
+                                decoration: BoxDecoration(
+                                    color: _con.restaurant.closed
+                                        ? Colors.grey
+                                        : Colors.green,
+                                    borderRadius: BorderRadius.circular(24)),
                                 child: _con.restaurant.closed
                                     ? Text(
                                         S.of(context).closed,
-                                        style: Theme.of(context).textTheme.caption.merge(TextStyle(color: Theme.of(context).primaryColor)),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .merge(TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
                                       )
                                     : Text(
                                         S.of(context).open,
-                                        style: Theme.of(context).textTheme.caption.merge(TextStyle(color: Theme.of(context).primaryColor)),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .merge(TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
                                       ),
                               ),
                               SizedBox(width: 10),
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 3),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 3),
                                 decoration: BoxDecoration(
-                                    color: _con.restaurant.availableForDelivery ? Colors.green : Colors.orange, borderRadius: BorderRadius.circular(24)),
+                                    color: _con.restaurant.availableForDelivery
+                                        ? Colors.green
+                                        : Colors.orange,
+                                    borderRadius: BorderRadius.circular(24)),
                                 child: _con.restaurant.availableForDelivery
                                     ? Text(
                                         S.of(context).delivery,
-                                        style: Theme.of(context).textTheme.caption.merge(TextStyle(color: Theme.of(context).primaryColor)),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .merge(TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
                                       )
                                     : Text(
                                         S.of(context).pickup,
-                                        style: Theme.of(context).textTheme.caption.merge(TextStyle(color: Theme.of(context).primaryColor)),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .caption
+                                            .merge(TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
                                       ),
                               ),
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            child: Helper.applyHtml(context, _con.restaurant.description),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 12),
+                            child: Helper.applyHtml(
+                                context, _con.restaurant.description),
                           ),
-                          ImageThumbCarouselWidget(galleriesList: _con.galleries),
+                          ImageThumbCarouselWidget(
+                              galleriesList: _con.galleries),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: ListTile(
@@ -168,11 +214,14 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                            child: Helper.applyHtml(context, _con.restaurant.information),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 12),
+                            child: Helper.applyHtml(
+                                context, _con.restaurant.information),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             color: Theme.of(context).primaryColor,
                             child: Row(
@@ -183,7 +232,8 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                     _con.restaurant.address ?? '',
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 2,
-                                    style: Theme.of(context).textTheme.bodyText1,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -193,14 +243,18 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                   child: FlatButton(
                                     padding: EdgeInsets.all(0),
                                     onPressed: () {
-                                      Navigator.of(context).pushNamed('/Pages', arguments: new RouteArgument(id: '1', param: _con.restaurant));
+                                      Navigator.of(context).pushNamed('/Pages',
+                                          arguments: new RouteArgument(
+                                              id: '1', param: _con.restaurant));
                                     },
                                     child: Icon(
                                       Icons.directions,
                                       color: Theme.of(context).primaryColor,
                                       size: 24,
                                     ),
-                                    color: Theme.of(context).accentColor.withOpacity(0.9),
+                                    color: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.9),
                                     shape: StadiumBorder(),
                                   ),
                                 ),
@@ -208,7 +262,8 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                             ),
                           ),
                           Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
                             margin: const EdgeInsets.symmetric(vertical: 5),
                             color: Theme.of(context).primaryColor,
                             child: Row(
@@ -218,7 +273,8 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                   child: Text(
                                     '${_con.restaurant.phone} \n${_con.restaurant.mobile}',
                                     overflow: TextOverflow.ellipsis,
-                                    style: Theme.of(context).textTheme.bodyText1,
+                                    style:
+                                        Theme.of(context).textTheme.bodyText1,
                                   ),
                                 ),
                                 SizedBox(width: 10),
@@ -235,7 +291,9 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                                       color: Theme.of(context).primaryColor,
                                       size: 24,
                                     ),
-                                    color: Theme.of(context).accentColor.withOpacity(0.9),
+                                    color: Theme.of(context)
+                                        .accentColor
+                                        .withOpacity(0.9),
                                     shape: StadiumBorder(),
                                   ),
                                 ),
@@ -245,17 +303,20 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                           _con.featuredFoods.isEmpty
                               ? SizedBox(height: 0)
                               : Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
                                   child: ListTile(
                                     dense: true,
-                                    contentPadding: EdgeInsets.symmetric(vertical: 0),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 0),
                                     leading: Icon(
                                       Icons.shopping_basket,
                                       color: Theme.of(context).hintColor,
                                     ),
                                     title: Text(
                                       S.of(context).featuredFoods,
-                                      style: Theme.of(context).textTheme.headline4,
+                                      style:
+                                          Theme.of(context).textTheme.headline4,
                                     ),
                                   ),
                                 ),
@@ -281,25 +342,30 @@ class _DetailsWidgetState extends StateMVC<DetailsWidget> {
                           _con.reviews.isEmpty
                               ? SizedBox(height: 5)
                               : Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 10, horizontal: 20),
                                   child: ListTile(
                                     dense: true,
-                                    contentPadding: EdgeInsets.symmetric(vertical: 0),
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 0),
                                     leading: Icon(
                                       Icons.recent_actors,
                                       color: Theme.of(context).hintColor,
                                     ),
                                     title: Text(
                                       S.of(context).whatTheySay,
-                                      style: Theme.of(context).textTheme.headline4,
+                                      style:
+                                          Theme.of(context).textTheme.headline4,
                                     ),
                                   ),
                                 ),
                           _con.reviews.isEmpty
                               ? SizedBox(height: 5)
                               : Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                                  child: ReviewsListWidget(reviewsList: _con.reviews),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  child: ReviewsListWidget(
+                                      reviewsList: _con.reviews),
                                 ),
                         ],
                       ),

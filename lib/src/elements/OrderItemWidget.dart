@@ -9,6 +9,7 @@ import '../helpers/helper.dart';
 import '../models/order.dart';
 import '../models/route_argument.dart';
 import 'FoodOrderItemWidget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderItemWidget extends StatefulWidget {
   final bool expanded;
@@ -24,12 +25,23 @@ class OrderItemWidget extends StatefulWidget {
   }
 }
 
+Future<void> _launched;
+String _phone = "+91 9061517113";
+Future<void> _makePhoneCall(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
 class _OrderItemWidgetState extends StateMVC<OrderItemWidget> {
   // OrderController _con;
 
   // _OrderItemWidgetState() : super(OrderController()) {
   //   _con = controller;
   // }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
@@ -194,13 +206,12 @@ class _OrderItemWidgetState extends StateMVC<OrderItemWidget> {
                                                 .accentColor
                                                 .withOpacity(0.5))),
                                     child: new Text(
-                                      S.of(context).yes,
+                                      'call Admin',
                                       style: TextStyle(
                                           color: Theme.of(context).hintColor),
                                     ),
                                     onPressed: () {
-                                      widget.onCanceled(widget.order);
-                                      Navigator.of(context).pop();
+                                      _launched = _makePhoneCall('tel:$_phone');
                                     },
                                   ),
                                   SizedBox(

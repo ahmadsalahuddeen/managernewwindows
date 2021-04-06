@@ -32,7 +32,7 @@ class _Orders2WidgetState extends StateMVC<Orders2Widget> {
   }
 
   Future<void> _launched;
-  String _phone = "9061517113";
+  String _phone = "+91 9061517113";
   Future<void> _makePhoneCall(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
